@@ -1,0 +1,39 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import BlogHeader from '../components/BlogHeader.astro';
+import BlogPost from '../components/BlogPost.astro';
+import { Code } from 'astro/components'
+
+import path from 'path';
+import fs from 'fs';
+
+export let content;
+
+let file = null;
+
+try {
+  file = await fs.promises.readFile(path.join(process.cwd(), './src/pages/button.txt'), 'utf8');
+} catch (ex) {
+  console.log('error: ', ex);
+}
+
+const { content } = Astro.props;
+const { secret, title, description, publishDate, author, heroImage, permalink, alt } = content;
+
+---
+
+<html lang={content.lang || 'en'}>
+	<head>
+		<BaseHead {title} {description} {permalink} />
+	</head>
+
+	<body>
+		<BlogHeader />
+		<div class="wrapper">
+			<BlogPost {title} {author} {heroImage} {publishDate} {alt}>
+				<slot />
+			</BlogPost>
+      <Code code={file} lang="jsx" />
+		</div>
+	</body>
+</html>

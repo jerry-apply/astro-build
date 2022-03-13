@@ -1,0 +1,20 @@
+---
+const { items } = Astro.props;
+
+---
+<ul>
+  <label class="list-label">
+    <slot name="list-label">
+  </label>
+  {items.map(item => (
+    <li>{item}</li>
+  ))}
+  <slot name="list-footer">
+</ul>
+
+<style>
+
+.list-label {
+  font-size: 2rem;
+}
+</style>
